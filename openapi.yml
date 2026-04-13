@@ -1,0 +1,269 @@
+openapi: 3.0.3
+info:
+  title: Rider Service API
+  description: API for managing riders in the RiderService application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080 
+    description: Local development server
+paths:
+  /v1/riders:
+    post:
+      summary: Create a new rider
+      tags:
+        - Riders
+      requestBody:
+        description: Rider create request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiderRequestDTO'
+      responses:
+        '201':
+          description: Rider created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseRiderResponseDTO'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseValidationErrors'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+    get:
+      summary: Get all riders
+      tags:
+        - Riders
+      responses:
+        '200':
+          description: A list of riders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseRiderResponseDTOList'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+  /v1/riders/{id}:
+    get:
+      summary: Get a rider by ID
+      tags:
+        - Riders
+      parameters:
+        - name: id
+          in: path
+          description: Rider UUID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Rider found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseRiderResponseDTO'
+        '404':
+          description: Rider not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+    put:
+      summary: Update an existing rider
+      tags:
+        - Riders
+      parameters:
+        - name: id
+          in: path
+          description: Rider UUID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Rider update request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiderRequestDTO'
+      responses:
+        '200':
+          description: Rider updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseRiderResponseDTO'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseValidationErrors'
+        '404':
+          description: Rider not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+    delete:
+      summary: Delete a rider by ID
+      tags:
+        - Riders
+      parameters:
+        - name: id
+          in: path
+          description: Rider UUID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Rider deleted successfully
+        '404':
+          description: Rider not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+components:
+  schemas:
+    RiderRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane.doe@example.com
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 15
+          example: 1234567890
+        city:
+          type: string
+          example: Springfield
+      required:
+        - name
+        - email
+        - phone
+    RiderResponseDTO:
+      type: object
+      properties:
+        riderId:
+          type: string
+          format: uuid
+          example: 7d9f7cbc-18d4-4d6c-aed8-8ddf5faaf0c3
+        name:
+          type: string
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane.doe@example.com
+        phone:
+          type: string
+          example: 1234567890
+        city:
+          type: string
+          example: Springfield
+        createdAt:
+          type: string
+          format: date-time
+          example: 2026-04-13T14:12:00
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          nullable: true
+        data:
+          nullable: true
+    ApiResponseRiderResponseDTO:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/RiderResponseDTO'
+    ApiResponseRiderResponseDTOList:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/RiderResponseDTO'
+    ApiResponseError:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            status:
+              type: string
+              example: error
+            message:
+              type: string
+              example: Rider not found
+            data:
+              nullable: true
+              type: object
+    ApiResponseValidationErrors:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            status:
+              type: string
+              example: error
+            message:
+              type: string
+              example: Validation failed
+            data:
+              type: object
+              additionalProperties:
+                type: string
+              example:
+                email: Email should be valid
+                phone: Phone must be between 10 and 15 characters
