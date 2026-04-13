@@ -1,0 +1,124 @@
+{
+  "info": {
+    "name": "Rider Service API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Rider",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"1234567890\",\n  \"city\": \"New York\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/v1/riders",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "riders"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Riders",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/v1/riders",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "riders"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Rider by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "riders",
+            "550e8400-e29b-41d4-a716-446655440000"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Rider",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.doe.updated@example.com\",\n  \"phone\": \"0987654321\",\n  \"city\": \"Los Angeles\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "riders",
+            "550e8400-e29b-41d4-a716-446655440000"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Rider",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "riders",
+            "550e8400-e29b-41d4-a716-446655440000"
+          ]
+        }
+      }
+    }
+  ]
+}

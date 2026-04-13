@@ -1,0 +1,12 @@
+/workspaces/RiderService/src/main/java/com/rides/riderservice/repository/RiderRepository.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/exception/RiderNotFoundException.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/entity/Rider.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/controller/RiderController.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/RiderServiceApplication.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/service/RiderServiceImpl.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/dto/RiderResponseDTO.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/dto/ApiResponse.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/exception/GlobalExceptionHandler.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/dto/RiderRequestDTO.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/config/CorrelationIdFilter.java
+/workspaces/RiderService/src/main/java/com/rides/riderservice/service/RiderService.java
