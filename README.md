@@ -33,7 +33,8 @@ com.rides.riderservice
 ## Database
 - Name: `rider_db`
 - Table: `riders`
-- Schema: rider_id (UUID), name, email, phone, city, created_at
+- Schema: rider_id (numeric dataset ID), name, email, phone, city, created_at
+- Startup seed: `ride_riders.csv` is loaded when the service starts. Set `RIDER_SEED_CSV_PATH` to override the CSV location.
 
 ## APIs
 - POST /v1/riders - Create Rider

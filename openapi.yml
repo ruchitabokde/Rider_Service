@@ -63,11 +63,12 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Rider UUID
+          description: Numeric rider ID from ride_riders.csv
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
+            example: 1
       responses:
         '200':
           description: Rider found
@@ -94,11 +95,12 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Rider UUID
+          description: Numeric rider ID from ride_riders.csv
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
+            example: 1
       requestBody:
         description: Rider update request
         required: true
@@ -138,11 +140,12 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Rider UUID
+          description: Numeric rider ID from ride_riders.csv
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
+            example: 1
       responses:
         '204':
           description: Rider deleted successfully
@@ -188,9 +191,9 @@ components:
       type: object
       properties:
         riderId:
-          type: string
-          format: uuid
-          example: 7d9f7cbc-18d4-4d6c-aed8-8ddf5faaf0c3
+          type: integer
+          format: int64
+          example: 1
         name:
           type: string
           example: Jane Doe

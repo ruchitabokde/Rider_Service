@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,10 +28,12 @@ public class RiderServiceImpl implements RiderService {
     public RiderResponseDTO createRider(RiderRequestDTO requestDTO) {
         log.info("Creating rider: {}", requestDTO.getEmail());
         Rider rider = new Rider();
+        rider.setRiderId(riderRepository.findMaxRiderId() + 1);
         rider.setName(requestDTO.getName());
         rider.setEmail(requestDTO.getEmail());
         rider.setPhone(requestDTO.getPhone());
         rider.setCity(requestDTO.getCity());
+        rider.setCreatedAt(LocalDateTime.now());
         Rider savedRider = riderRepository.save(rider);
         log.info("Rider created with id: {}", savedRider.getRiderId());
         return mapToResponseDTO(savedRider);
@@ -45,7 +47,7 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    public RiderResponseDTO getRiderById(UUID id) {
+    public RiderResponseDTO getRiderById(Long id) {
         log.info("Fetching rider by id: {}", id);
         Rider rider = riderRepository.findById(id)
                 .orElseThrow(() -> new RiderNotFoundException("Rider not found with id: " + id));
@@ -53,7 +55,7 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    public RiderResponseDTO updateRider(UUID id, RiderRequestDTO requestDTO) {
+    public RiderResponseDTO updateRider(Long id, RiderRequestDTO requestDTO) {
         log.info("Updating rider with id: {}", id);
         Rider rider = riderRepository.findById(id)
                 .orElseThrow(() -> new RiderNotFoundException("Rider not found with id: " + id));
@@ -67,7 +69,7 @@ public class RiderServiceImpl implements RiderService {
     }
 
     @Override
-    public void deleteRider(UUID id) {
+    public void deleteRider(Long id) {
         log.info("Deleting rider with id: {}", id);
         if (!riderRepository.existsById(id)) {
             throw new RiderNotFoundException("Rider not found with id: " + id);

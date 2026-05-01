@@ -1,12 +1,19 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
 COPY pom.xml .
 COPY src ./src
 
-RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=build /app/target/rider-service-0.0.1-SNAPSHOT.jar app.jar
+COPY ride_riders.csv ./ride_riders.csv
 
 EXPOSE 8081
 
-CMD ["java", "-jar", "target/rider-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/riders")
@@ -44,7 +43,7 @@ public class RiderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<RiderResponseDTO>> getRiderById(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<RiderResponseDTO>> getRiderById(@PathVariable Long id) {
         log.info("Incoming request to get rider by id: {}", id);
         RiderResponseDTO rider = riderService.getRiderById(id);
         log.info("Response status: {}", HttpStatus.OK);
@@ -52,7 +51,7 @@ public class RiderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<RiderResponseDTO>> updateRider(@PathVariable UUID id, @Valid @RequestBody RiderRequestDTO requestDTO) {
+    public ResponseEntity<ApiResponse<RiderResponseDTO>> updateRider(@PathVariable Long id, @Valid @RequestBody RiderRequestDTO requestDTO) {
         log.info("Incoming request to update rider with id: {}", id);
         RiderResponseDTO response = riderService.updateRider(id, requestDTO);
         log.info("Response status: {}", HttpStatus.OK);
@@ -60,7 +59,7 @@ public class RiderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteRider(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteRider(@PathVariable Long id) {
         log.info("Incoming request to delete rider with id: {}", id);
         riderService.deleteRider(id);
         log.info("Response status: {}", HttpStatus.NO_CONTENT);

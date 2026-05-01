@@ -4,7 +4,6 @@ import com.rides.riderservice.dto.RiderRequestDTO;
 import com.rides.riderservice.dto.RiderResponseDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface RiderService {
 
@@ -12,10 +11,10 @@ public interface RiderService {
 
     List<RiderResponseDTO> getAllRiders();
 
-    RiderResponseDTO getRiderById(UUID id);
+    RiderResponseDTO getRiderById(Long id);
 
-    RiderResponseDTO updateRider(UUID id, RiderRequestDTO requestDTO);
+    RiderResponseDTO updateRider(Long id, RiderRequestDTO requestDTO);
 
-    void deleteRider(UUID id);
+    void deleteRider(Long id);
 
 }

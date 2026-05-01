@@ -12,7 +12,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
   sql:
     init:
-      mode: always
+      mode: never
 
 server:
   port: 8081
@@ -23,3 +23,7 @@ logging:
     com.rides.riderservice: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %X{correlationId} - %msg%n"
+
+rider:
+  seed:
+    csv-path: ${RIDER_SEED_CSV_PATH:ride_riders.csv}

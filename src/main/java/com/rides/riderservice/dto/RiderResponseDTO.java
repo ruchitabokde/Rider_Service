@@ -1,18 +1,17 @@
 package com.rides.riderservice.dto;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class RiderResponseDTO {
 
-    private UUID riderId;
+    private Long riderId;
     private String name;
     private String email;
     private String phone;
     private String city;
     private LocalDateTime createdAt;
 
-    public RiderResponseDTO(UUID riderId, String name, String email, String phone, String city, LocalDateTime createdAt) {
+    public RiderResponseDTO(Long riderId, String name, String email, String phone, String city, LocalDateTime createdAt) {
         this.riderId = riderId;
         this.name = name;
         this.email = email;
@@ -21,11 +20,11 @@ public class RiderResponseDTO {
         this.createdAt = createdAt;
     }
 
-    public UUID getRiderId() {
+    public Long getRiderId() {
         return riderId;
     }
 
-    public void setRiderId(UUID riderId) {
+    public void setRiderId(Long riderId) {
         this.riderId = riderId;
     }
 
