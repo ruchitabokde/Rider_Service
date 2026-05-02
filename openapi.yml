@@ -7,6 +7,36 @@ servers:
   - url: http://localhost:8080 
     description: Local development server
 paths:
+  /actuator/health:
+    get:
+      summary: Rider Service health check
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: Service health status
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                status: UP
+  /actuator/prometheus:
+    get:
+      summary: Rider Service Prometheus metrics
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: Prometheus-formatted service metrics
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |
+                # HELP jvm_memory_used_bytes The amount of used memory
+                # TYPE jvm_memory_used_bytes gauge
   /v1/riders:
     post:
       summary: Create a new rider

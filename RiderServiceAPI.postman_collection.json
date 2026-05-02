@@ -1,11 +1,60 @@
 {
   "info": {
     "name": "Rider Service API",
+    "description": "Postman collection for the BITS ride-hailing Rider Service. Rider lookup/update/delete endpoints use the numeric rider id from ride_riders.csv.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/actuator/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "actuator",
+            "health"
+          ]
+        }
+      },
+      "description": "Checks Rider Service health through Spring Boot Actuator."
+    },
+    {
+      "name": "Prometheus Metrics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/actuator/prometheus",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "actuator",
+            "prometheus"
+          ]
+        }
+      },
+      "description": "Returns Rider Service Prometheus metrics."
+    },
+    {
       "name": "Create Rider",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.data && json.data.riderId) pm.collectionVariables.set(\"riderId\", json.data.riderId);"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [
@@ -19,12 +68,10 @@
           "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"1234567890\",\n  \"city\": \"New York\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8081/v1/riders",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/v1/riders",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "8081",
           "path": [
             "v1",
             "riders"
@@ -38,12 +85,10 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/v1/riders",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/v1/riders",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "8081",
           "path": [
             "v1",
             "riders"
@@ -52,24 +97,23 @@
       }
     },
     {
-      "name": "Get Rider by ID",
+      "name": "Get Rider By Id",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/v1/riders/{{riderId}}",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "8081",
           "path": [
             "v1",
             "riders",
-            "550e8400-e29b-41d4-a716-446655440000"
+            "{{riderId}}"
           ]
         }
-      }
+      },
+      "description": "Fetches a rider by numeric ID."
     },
     {
       "name": "Update Rider",
@@ -86,19 +130,18 @@
           "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.doe.updated@example.com\",\n  \"phone\": \"0987654321\",\n  \"city\": \"Los Angeles\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/v1/riders/{{riderId}}",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "8081",
           "path": [
             "v1",
             "riders",
-            "550e8400-e29b-41d4-a716-446655440000"
+            "{{riderId}}"
           ]
         }
-      }
+      },
+      "description": "Updates a rider by numeric ID."
     },
     {
       "name": "Delete Rider",
@@ -106,19 +149,28 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/v1/riders/550e8400-e29b-41d4-a716-446655440000",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/v1/riders/{{riderId}}",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "8081",
           "path": [
             "v1",
             "riders",
-            "550e8400-e29b-41d4-a716-446655440000"
+            "{{riderId}}"
           ]
         }
-      }
+      },
+      "description": "Deletes a rider by numeric ID. Use this carefully during demos because it removes the selected rider."
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "riderId",
+      "value": "1"
     }
   ]
 }
