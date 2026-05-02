@@ -27,3 +27,12 @@ logging:
 rider:
   seed:
     csv-path: ${RIDER_SEED_CSV_PATH:ride_riders.csv}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name:rider-service}
